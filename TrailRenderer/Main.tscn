@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/CameraTutorial/PlaneController.gd" type="Script" id=1]
+[ext_resource path="res://src/TrailRenderTutorial/TrailRender.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 0.4 ), 0.0, 0.0, 0, 0, Vector2( 0.351648, 0.790909 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.909804, 0.501961, 0.105882, 1 )
+
+[node name="Main" type="Node"]
+
+[node name="World" type="Spatial" parent="."]
+
+[node name="RtsCameraController" type="Camera" parent="World"]
+script = ExtResource( 1 )
+
+[node name="Plane" parent="World/RtsCameraController" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.966, -5.623 )
+width = 2.0
+width_curve = SubResource( 1 )
+max_points = 50
+material = SubResource( 2 )
