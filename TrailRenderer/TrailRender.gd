@@ -28,13 +28,13 @@ func _process(delta: float) -> void:
 	if render:
 		# add new point and render
 		add_point()
-		_draw_trail()
 	else:
 		# slowly hide the trail
 		if points.size() > 0:
 			var last_point = points.pop_back()
 			last_point.queue_free()
-
+	
+	_draw_trail()
 
 #############################
 # API
@@ -50,7 +50,7 @@ func add_point() -> void:
 
 
 func _draw_trail() -> void:
-	if points.size() < 2:
+	if points.size() < 1:
 		return
 	# create surface tool
 	var st = SurfaceTool.new()
@@ -62,7 +62,8 @@ func _draw_trail() -> void:
 	st.generate_normals()
 #	st.generate_tangents()
 	$Node/Render.mesh = st.commit()
-	$Node/Render.set_surface_material(0, material)
+	if points.size() > 1:
+		$Node/Render.set_surface_material(0, material)
 
 
 func _points_to_rect(st: SurfaceTool, p1: Position3D, p2: Position3D, idx: float) -> void:
